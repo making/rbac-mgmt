@@ -123,6 +123,10 @@ spec:
                       nullable: true
                       description: Namespace of the service account
                       default: null
+                    create_serviceaccount:
+                      type: boolean
+                      description: Whether to create the service account
+                      default: false
                     roles:
                       type: array
                       description: Roles to bind to the service account
@@ -223,6 +227,10 @@ spec:
                     nullable: true
                     description: Namespace of the service account
                     default: null
+                  create_serviceaccount:
+                    type: boolean
+                    description: Whether to create the service account
+                    default: false
                   clusterroles:
                     type: array
                     description: ClusterRoles to bind to the service account

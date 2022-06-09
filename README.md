@@ -37,7 +37,7 @@ $ tanzu package available get -n ${NAMESPACE} rbac-mgmt.pkg.maki.lol/0.0.1 --val
   rolebindings                        []       array  Definition of RoleBindings per namespace  
 ```
 
-For the more detailed schema, see [the openapi spec](./repo/packages/rbac-mgmt.pkg.maki.lol/0.0.1.yaml#L10-L234)
+For the more detailed schema, see [the openapi spec](./repo/packages/rbac-mgmt.pkg.maki.lol/0.0.1.yaml#L10-L242)
 
 Install the RBAC Management package, using the values file:
 

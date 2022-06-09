@@ -40,6 +40,8 @@ rolebindings:
     #@schema/desc "Namespace of the service account"
     #@schema/nullable
     namespace: ""
+    #@schema/desc "Whether to create the service account"
+    create_serviceaccount: false
     #@schema/desc "Roles to bind to the service account"
     roles:
     #@schema/desc "Role name to bind to the service account"
@@ -76,6 +78,8 @@ clusterrolebinding:
     #@schema/desc "Namespace of the service account"
     #@schema/nullable
     namespace: ""
+    #@schema/desc "Whether to create the service account"
+    create_serviceaccount: false
     #@schema/desc "ClusterRoles to bind to the service account"
     clusterroles:
     #@schema/desc "ClusterRole name to bind to the service account"

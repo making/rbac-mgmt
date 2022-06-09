@@ -16,7 +16,7 @@ rolebindings:
     clusterroles: [ view ]
   serviceaccounts:
   - name: ci-bot
-    namespace: ci
+    create_serviceaccount: true
     roles: [ app-developer ]
     clusterroles: [ view ]
 - namespace: default
@@ -36,4 +36,5 @@ clusterrolebinding:
   serviceaccounts:
   - name: kapp-bot
     namespace: kapp
+    create_serviceaccount: true
     clusterroles: [ admin ]
