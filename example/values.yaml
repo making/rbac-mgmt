@@ -1,0 +1,39 @@
+#@data/values
+---
+rolebindings:
+- namespace: demo
+  create_namespace: true
+  users:
+  - name: alex
+    roles: [ app-developer ]
+    clusterroles: [ view ]
+  - name: peter
+    roles: [ app-developer, app-operator ]
+  - name: oliver
+    roles: [ app-operator ]
+  groups:
+  - name: demo-users
+    clusterroles: [ view ]
+  serviceaccounts:
+  - name: ci-bot
+    namespace: ci
+    roles: [ app-developer ]
+    clusterroles: [ view ]
+- namespace: default
+  users:
+  - name: demo
+    clusterroles: [ admin ]
+
+clusterrolebinding:
+  users:
+  - name: maki
+    clusterroles: [ cluster-admin ]
+  groups:
+  - name: administrators
+    clusterroles: [ cluster-admin ]
+  - name: users
+    clusterroles: [ view ]
+  serviceaccounts:
+  - name: kapp-bot
+    namespace: kapp
+    clusterroles: [ admin ]

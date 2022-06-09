@@ -1,0 +1,82 @@
+#@data/values-schema
+---
+#@schema/desc "Definition of RoleBindings per namespace"
+rolebindings:
+- #@schema/desc "Namespace for the rolebinding"
+  namespace: ""
+  #@schema/desc "Whether to create the namespace"
+  create_namespace: false
+  #@schema/desc "Definition of RoleBinding for users"
+  #@schema/examples ("Example of users", [{"name": "alex@example.com", "roles": ["app-developer"]}, {"name": "oliver@example.com", "roles": ["app-operator"], "clusterroles": ["admin"]}])
+  users:
+  - #@schema/desc "Username to bind the roles"
+    name: ""
+    #@schema/desc "Roles to bind to the user"
+    roles:
+    #@schema/desc "Role name to bind to the user"
+    - ""
+    #@schema/desc "ClusterRoles to bind to the user"
+    clusterroles:
+    #@schema/desc "ClusterRole name to bind to the user"
+    - ""
+  #@schema/desc "Definition of RoleBinding for groups"
+  #@schema/examples ("Example of groups", [{"name": "developers", "roles": ["app-developer"]}, {"name": "operators", "roles": ["app-operator"], "clusterroles": ["admin"]}])
+  groups:
+  - #@schema/desc "Group name to bind the roles"
+    name: ""
+    #@schema/desc "Roles to bind to the group"
+    roles:
+    #@schema/desc "Role name to bind to the group"
+    - ""
+    #@schema/desc "ClusterRoles to bind to the group"
+    clusterroles:
+    #@schema/desc "ClusterRole name to bind to the group"
+    - ""
+  #@schema/desc "Definition of RoleBinding for service accounts"
+  #@schema/examples ("Example of serviceaccounts", [{"name": "ci-bot", "clusterroles": ["ci-role"]}])
+  serviceaccounts:
+  - #@schema/desc "Service account name to bind the roles"
+    name: ""
+    #@schema/desc "Namespace of the service account"
+    #@schema/nullable
+    namespace: ""
+    #@schema/desc "Roles to bind to the service account"
+    roles:
+    #@schema/desc "Role name to bind to the service account"
+    - ""
+    #@schema/desc "ClusterRoles to bind to the service account"
+    clusterroles:
+    #@schema/desc "ClusterRole name to bind to the service account"
+    - ""
+#@schema/desc "Definition of ClusterRoleBindings"
+clusterrolebinding:
+  #@schema/desc "Definition of ClusterRoleBinding for users"
+  #@schema/examples ("Example of users", [{"name": "alex@example.com", "clusterroles": ["app-developer"]}, {"name": "oliver@example.com", "clusterroles": ["app-operator"]}])
+  users:
+  - #@schema/desc "Username to bind the roles"
+    name: ""
+    #@schema/desc "ClusterRoles to bind to the user"
+    clusterroles:
+    #@schema/desc "ClusterRole name to bind to the user"
+    - ""
+  #@schema/desc "Definition of ClusterRoleBinding for groups"
+  #@schema/examples ("Example of groups", [{"name": "developers", "clusterroles": ["app-developer"]}, {"name": "operators", "clusterroles": ["app-operator"]}])
+  groups:
+  - #@schema/desc "Group name to bind the roles"
+    name: ""
+    #@schema/desc "ClusterRoles to bind to the group"
+    clusterroles:
+    #@schema/desc "ClusterRole name to bind to the group"
+    - ""
+  #@schema/desc "Definition of ClusterRoleBinding for service accounts"
+  #@schema/examples ("Example of serviceaccounts", [{"name": "ci-bot", "clusterroles": ["ci-role"]}])
+  serviceaccounts:
+  - #@schema/desc "Service account name to bind the roles"
+    name: ""
+    #@schema/desc "Namespace of the service account"
+    #@schema/nullable
+    namespace: ""
+    #@schema/desc "ClusterRoles to bind to the service account"
+    clusterroles:
+    #@schema/desc "ClusterRole name to bind to the service account"
+    - ""

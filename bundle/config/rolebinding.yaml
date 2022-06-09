@@ -1,0 +1,117 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:template", "template")
+#@ for rolebinding in data.values.rolebindings:
+#@   bindings = {}
+#@   if hasattr(rolebinding, 'users'):
+#@     for user in rolebinding.users:
+#@       if hasattr(user, 'roles'):
+#@         for role in ["Role$${}".format(r) for r in user.roles]:
+#@           if bindings.get(role) == None :
+#@             bindings[role] = { 'users': {} }
+#@           end
+#@           bindings[role]['users'].update({ user.name: { 'name': user.name } })
+#@         end
+#@       end
+#@       if hasattr(user, 'clusterroles'):
+#@         for role in ["ClusterRole$${}".format(r) for r in user.clusterroles]:
+#@           if bindings.get(role) == None :
+#@             bindings[role] = { 'users': {} }
+#@           end
+#@           bindings[role]['users'].update({ user.name: { 'name': user.name } })
+#@         end
+#@       end
+#@     end
+#@   end
+#@   if hasattr(rolebinding, 'groups'):
+#@     for group in rolebinding.groups:
+#@       if hasattr(group, 'roles'):
+#@         for role in ["Role$${}".format(r) for r in group.roles]:
+#@           if bindings.get(role) == None :
+#@             bindings[role] = { 'groups': {} }
+#@           else:
+#@             bindings[role].update({ 'groups': {} })
+#@           end
+#@           bindings[role]['groups'].update({ group.name: { 'name': group.name } })
+#@         end
+#@       end
+#@       if hasattr(group, 'clusterroles'):
+#@         for role in ["ClusterRole$${}".format(r) for r in group.clusterroles]:
+#@           if bindings.get(role) == None :
+#@             bindings[role] = { 'groups': {} }
+#@           else:
+#@             bindings[role].update({ 'groups': {} })
+#@           end
+#@           bindings[role]['groups'].update({ group.name: { 'name': group.name } })
+#@         end
+#@       end
+#@     end
+#@   end
+#@   if hasattr(rolebinding, 'serviceaccounts'):
+#@     for serviceaccount in rolebinding.serviceaccounts:
+#@       if hasattr(serviceaccount, 'roles'):
+#@         for role in ["Role$${}".format(r) for r in serviceaccount.roles]:
+#@           if bindings.get(role) == None :
+#@             bindings[role] = { 'serviceaccounts': {} }
+#@           else:
+#@             bindings[role].update({ 'serviceaccounts': {} })
+#@           end
+#@           sa = dict(serviceaccount)
+#@           sa.pop('roles', None)
+#@           sa.pop('clusterroles', None)
+#@           bindings[role]['serviceaccounts'].update({ serviceaccount.name: sa})
+#@         end
+#@       end
+#@       if hasattr(serviceaccount, 'clusterroles'):
+#@         for role in ["ClusterRole$${}".format(r) for r in serviceaccount.clusterroles]:
+#@           if bindings.get(role) == None :
+#@             bindings[role] = { 'serviceaccounts': {} }
+#@           else:
+#@             bindings[role].update({ 'serviceaccounts': {} })
+#@           end
+#@           sa = dict(serviceaccount)
+#@           sa.pop('roles', None)
+#@           sa.pop('clusterroles', None)
+#@           bindings[role]['serviceaccounts'].update({ serviceaccount.name: sa })
+#@         end
+#@       end
+#@     end
+#@   end
+#@   for role in bindings.keys():
+#@     for subject in bindings[role].keys():
+#@       bindings[role][subject] = bindings[role][subject].values()
+#@     end
+#@   end
+#@   for role in bindings.keys():
+#@     kind = role.split('$$')[0]
+#@     name = role.split('$$')[1]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: #@ rolebinding.namespace
+  name: #@ "{}-{}-binding".format(kind.lower(), name)
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: #@ kind
+  name: #@ name
+subjects:
+#@     if bindings[role].get('users'):
+#@       for user in bindings[role].get('users'):
+- kind: User
+  name: #@ user.get('name')
+#@       end
+#@     end
+#@     if bindings[role].get('groups'):
+#@       for group in bindings[role].get('groups'):
+- kind: Group
+  name: #@ group.get('name')
+#@       end
+#@     end
+#@     if bindings[role].get('serviceaccounts'):
+#@       for serviceaccount in bindings[role].get('serviceaccounts'):
+- kind: ServiceAccount
+  _: #@ template.replace(serviceaccount)
+#@       end
+#@     end
+#@   end
+#@ end
