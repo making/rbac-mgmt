@@ -1,6 +1,5 @@
 #@ load("@ytt:data", "data")
-#@ load("@ytt:template", "template")
-#@ for rolebinding in data.values.rolebindings:
+#@ for rolebinding in data.values.rolebindings if hasattr(data.values, 'rolebindings') else [] :
 #@   bindings = {}
 #@   if hasattr(rolebinding, 'users'):
 #@     for user in rolebinding.users:
@@ -110,7 +109,9 @@ subjects:
 #@     if bindings[role].get('serviceaccounts'):
 #@       for serviceaccount in bindings[role].get('serviceaccounts'):
 - kind: ServiceAccount
-  _: #@ template.replace(serviceaccount)
+  name: #@ serviceaccount.get('name')
+  #@ if/end serviceaccount.get('namespace'):
+  namespace: #@ serviceaccount.get('namespace')
 #@       end
 #@     end
 #@   end

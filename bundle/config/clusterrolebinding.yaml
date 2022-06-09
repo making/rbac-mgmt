@@ -1,6 +1,5 @@
 #@ load("@ytt:data", "data")
-#@ load("@ytt:template", "template")
-#@ rolebinding = data.values.clusterrolebinding
+#@ rolebinding = data.values.clusterrolebinding if hasattr(data.values, 'clusterrolebinding') else {}
 #@ bindings = {}
 #@ if hasattr(rolebinding, 'users'):
 #@   for user in rolebinding.users:
@@ -77,7 +76,9 @@ subjects:
 #@   if bindings[role].get('serviceaccounts'):
 #@     for serviceaccount in bindings[role].get('serviceaccounts'):
 - kind: ServiceAccount
-  _: #@ template.replace(serviceaccount)
+  name: #@ serviceaccount.get('name')
+  #@ if/end serviceaccount.get('namespace'):
+  namespace: #@ serviceaccount.get('namespace')
 #@     end
 #@   end
 #@ end
