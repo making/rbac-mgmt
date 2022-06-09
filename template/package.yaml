@@ -1,0 +1,32 @@
+#@ load("@ytt:data", "data")  # for reading data values (generated via ytt's data-values-schema-inspect mode).
+#@ load("@ytt:yaml", "yaml")  # for dynamically decoding the output of ytt's data-values-schema-inspect
+---
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: Package
+metadata:
+  name: #@ "rbac-mgmt.pkg.maki.lol.{}".format(data.values.version)
+spec:
+  refName: rbac-mgmt.pkg.maki.lol
+  version: #@ data.values.version
+  releaseNotes: #@ "RBAC Management {}".format(data.values.version)
+  valuesSchema:
+    openAPIv3: #@ yaml.decode(data.values.openapi)["components"]["schemas"]["dataValues"]
+  template:
+    spec:
+      fetch:
+      - imgpkgBundle:
+          image: #@ "ghcr.io/making/rbac-mgmt-bundle:{}".format(data.values.version)
+      template:
+      - ytt: { }
+      - kbld:
+          paths:
+          - "-"
+          - ".imgpkg/images.yml"
+      deploy:
+      - kapp:
+          rawOptions:
+          - --wait-timeout=5m
+          - --diff-changes=true
+          inspect:
+            rawOptions:
+            - --tree=true

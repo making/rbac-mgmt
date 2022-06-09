@@ -1,0 +1,10 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: PackageMetadata
+metadata:
+  name: rbac-mgmt.pkg.maki.lol
+spec:
+  displayName: rbac-mgmt
+  longDescription: RBAC Management
+  shortDescription: RBAC Management
+  categories:
+  - rbac

@@ -1,0 +1,253 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: Package
+metadata:
+  name: rbac-mgmt.pkg.maki.lol.0.0.1
+spec:
+  refName: rbac-mgmt.pkg.maki.lol
+  version: 0.0.1
+  releaseNotes: RBAC Management 0.0.1
+  valuesSchema:
+    openAPIv3:
+      type: object
+      additionalProperties: false
+      properties:
+        rolebindings:
+          type: array
+          description: Definition of RoleBindings per namespace
+          items:
+            type: object
+            additionalProperties: false
+            description: Namespace for the rolebinding
+            properties:
+              namespace:
+                type: string
+                default: ""
+              create_namespace:
+                type: boolean
+                description: Whether to create the namespace
+                default: false
+              users:
+                type: array
+                description: Definition of RoleBinding for users
+                x-example-description: Example of users
+                example:
+                - name: alex@example.com
+                  roles:
+                  - app-developer
+                - name: oliver@example.com
+                  roles:
+                  - app-operator
+                  clusterroles:
+                  - admin
+                items:
+                  type: object
+                  additionalProperties: false
+                  description: Username to bind the roles
+                  properties:
+                    name:
+                      type: string
+                      default: ""
+                    roles:
+                      type: array
+                      description: Roles to bind to the user
+                      items:
+                        type: string
+                        description: Role name to bind to the user
+                        default: ""
+                      default: []
+                    clusterroles:
+                      type: array
+                      description: ClusterRoles to bind to the user
+                      items:
+                        type: string
+                        description: ClusterRole name to bind to the user
+                        default: ""
+                      default: []
+                default: []
+              groups:
+                type: array
+                description: Definition of RoleBinding for groups
+                x-example-description: Example of groups
+                example:
+                - name: developers
+                  roles:
+                  - app-developer
+                - name: operators
+                  roles:
+                  - app-operator
+                  clusterroles:
+                  - admin
+                items:
+                  type: object
+                  additionalProperties: false
+                  description: Group name to bind the roles
+                  properties:
+                    name:
+                      type: string
+                      default: ""
+                    roles:
+                      type: array
+                      description: Roles to bind to the group
+                      items:
+                        type: string
+                        description: Role name to bind to the group
+                        default: ""
+                      default: []
+                    clusterroles:
+                      type: array
+                      description: ClusterRoles to bind to the group
+                      items:
+                        type: string
+                        description: ClusterRole name to bind to the group
+                        default: ""
+                      default: []
+                default: []
+              serviceaccounts:
+                type: array
+                description: Definition of RoleBinding for service accounts
+                x-example-description: Example of serviceaccounts
+                example:
+                - name: ci-bot
+                  clusterroles:
+                  - ci-role
+                items:
+                  type: object
+                  additionalProperties: false
+                  description: Service account name to bind the roles
+                  properties:
+                    name:
+                      type: string
+                      default: ""
+                    namespace:
+                      type: string
+                      nullable: true
+                      description: Namespace of the service account
+                      default: null
+                    roles:
+                      type: array
+                      description: Roles to bind to the service account
+                      items:
+                        type: string
+                        description: Role name to bind to the service account
+                        default: ""
+                      default: []
+                    clusterroles:
+                      type: array
+                      description: ClusterRoles to bind to the service account
+                      items:
+                        type: string
+                        description: ClusterRole name to bind to the service account
+                        default: ""
+                      default: []
+                default: []
+          default: []
+        clusterrolebinding:
+          type: object
+          additionalProperties: false
+          description: Definition of ClusterRoleBindings
+          properties:
+            users:
+              type: array
+              description: Definition of ClusterRoleBinding for users
+              x-example-description: Example of users
+              example:
+              - name: alex@example.com
+                clusterroles:
+                - app-developer
+              - name: oliver@example.com
+                clusterroles:
+                - app-operator
+              items:
+                type: object
+                additionalProperties: false
+                description: Username to bind the roles
+                properties:
+                  name:
+                    type: string
+                    default: ""
+                  clusterroles:
+                    type: array
+                    description: ClusterRoles to bind to the user
+                    items:
+                      type: string
+                      description: ClusterRole name to bind to the user
+                      default: ""
+                    default: []
+              default: []
+            groups:
+              type: array
+              description: Definition of ClusterRoleBinding for groups
+              x-example-description: Example of groups
+              example:
+              - name: developers
+                clusterroles:
+                - app-developer
+              - name: operators
+                clusterroles:
+                - app-operator
+              items:
+                type: object
+                additionalProperties: false
+                description: Group name to bind the roles
+                properties:
+                  name:
+                    type: string
+                    default: ""
+                  clusterroles:
+                    type: array
+                    description: ClusterRoles to bind to the group
+                    items:
+                      type: string
+                      description: ClusterRole name to bind to the group
+                      default: ""
+                    default: []
+              default: []
+            serviceaccounts:
+              type: array
+              description: Definition of ClusterRoleBinding for service accounts
+              x-example-description: Example of serviceaccounts
+              example:
+              - name: ci-bot
+                clusterroles:
+                - ci-role
+              items:
+                type: object
+                additionalProperties: false
+                description: Service account name to bind the roles
+                properties:
+                  name:
+                    type: string
+                    default: ""
+                  namespace:
+                    type: string
+                    nullable: true
+                    description: Namespace of the service account
+                    default: null
+                  clusterroles:
+                    type: array
+                    description: ClusterRoles to bind to the service account
+                    items:
+                      type: string
+                      description: ClusterRole name to bind to the service account
+                      default: ""
+                    default: []
+              default: []
+  template:
+    spec:
+      fetch:
+      - imgpkgBundle:
+          image: ghcr.io/making/rbac-mgmt-bundle:0.0.1
+      template:
+      - ytt: {}
+      - kbld:
+          paths:
+          - '-'
+          - .imgpkg/images.yml
+      deploy:
+      - kapp:
+          rawOptions:
+          - --wait-timeout=5m
+          - --diff-changes=true
+          inspect:
+            rawOptions:
+            - --tree=true
