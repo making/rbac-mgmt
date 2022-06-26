@@ -6,6 +6,18 @@ rolebindings:
   namespace: ""
   #@schema/desc "Whether to create the namespace"
   create_namespace: false
+  #@schema/desc "Developer Configurations for Tanzu Application Platform per namespace"
+  tap:
+    #@schema/desc "Whether to enable developer configurations for Tanzu Application Platform"
+    enabled: false
+    #@schema/desc "service account name"
+    service_account: default
+    #@schema/desc "Configuration of grype package"
+    grype:
+      #@schema/desc "Whether to install grype package"
+      enabled: false
+      #@schema/desc "grype version"
+      version: 1.1.1
   #@schema/desc "Definition of RoleBinding for users"
   #@schema/examples ("Example of users", [{"name": "alex@example.com", "roles": ["app-developer"]}, {"name": "oliver@example.com", "roles": ["app-operator"], "clusterroles": ["admin"]}])
   users:

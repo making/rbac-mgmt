@@ -1,0 +1,22 @@
+#@ load("@ytt:data", "data")
+---
+apiVersion: kapp.k14s.io/v1alpha1
+kind: Config
+rebaseRules:
+#! git-ssh uses what's on the cluster
+- paths:
+  - [ data, identity ]
+  - [ data, identity.pub ]
+  - [ data, known_hosts ]
+  - [ data, ssh-privatekey ]
+  - [ annotations ]
+  type: copy
+  sources: [ existing, new ]
+  resourceMatchers:
+  - anyMatcher:
+      matchers:
+      #@ for/end namespace in [ rolebinding.namespace for rolebinding in data.values.rolebindings if (hasattr(rolebinding, "tap") and hasattr(rolebinding.tap, "enabled") and rolebinding.tap.enabled) ]:
+      - kindNamespaceNameMatcher:
+          kind: Secret
+          namespace: #@ namespace
+          name: git-ssh

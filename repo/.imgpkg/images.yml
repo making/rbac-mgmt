@@ -8,4 +8,11 @@ images:
           tag: 0.0.1
           url: ghcr.io/making/rbac-mgmt-bundle:0.0.1
   image: ghcr.io/making/rbac-mgmt-bundle@sha256:cb49882cb692a9f662ad96edef67e4f32c41bbec47065389472ebdb75542fb95
+- annotations:
+    kbld.carvel.dev/id: ghcr.io/making/rbac-mgmt-bundle:0.0.2
+    kbld.carvel.dev/origins: |
+      - resolved:
+          tag: 0.0.2
+          url: ghcr.io/making/rbac-mgmt-bundle:0.0.2
+  image: ghcr.io/making/rbac-mgmt-bundle@sha256:9370e0b5bd2cae4087d9f051c00fba8d7058b984a94bf80e3b6b22eff0c6a551
 kind: ImagesLock

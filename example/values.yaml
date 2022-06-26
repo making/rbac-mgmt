@@ -3,6 +3,10 @@
 rolebindings:
 - namespace: demo
   create_namespace: true
+  tap:
+    enabled: true
+    grype:
+      enabled: true
   users:
   - name: alex
     roles: [ app-developer ]
@@ -19,6 +23,17 @@ rolebindings:
     create_serviceaccount: true
     roles: [ app-developer ]
     clusterroles: [ view ]
+- namespace: alex
+  tap:
+    enabled: true
+    service_account: foo
+  users:
+  - name: alex
+    roles: [ app-developer ]
+    clusterroles: [ edit ]
+  serviceaccounts:
+  - name: foo
+    create_serviceaccount: true
 - namespace: default
   users:
   - name: demo
