@@ -8,6 +8,8 @@ kind: SecretImport
 metadata:
   name: tap-registry
   namespace: #@ namespace
+  labels:
+    rbac-mgmt: "managed"
 spec:
   fromNamespace: tap-install
 ---
@@ -16,6 +18,8 @@ kind: SecretImport
 metadata:
   name: registry-credentials
   namespace: #@ namespace
+  labels:
+    rbac-mgmt: "managed"
 spec:
   fromNamespace: build-service
 ---
@@ -26,6 +30,8 @@ metadata:
   namespace: #@ namespace
   annotations:
     tekton.dev/git-0: github.com
+  labels:
+    rbac-mgmt: "managed"
 type: kubernetes.io/ssh-auth
 stringData:
   ssh-privatekey: 🔑
@@ -35,6 +41,8 @@ kind: ServiceAccount
 metadata:
   name: #@ rolebinding.tap.service_account
   namespace: #@ namespace
+  labels:
+    rbac-mgmt: "managed"
 secrets:
 - name: registry-credentials
 - name: git-ssh
@@ -47,6 +55,8 @@ kind: RoleBinding
 metadata:
   name: #@ "{}-permit-deliverable".format(rolebinding.tap.service_account)
   namespace: #@ namespace
+  labels:
+    rbac-mgmt: "managed"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -60,6 +70,8 @@ kind: RoleBinding
 metadata:
   name: #@ "{}-permit-workload".format(rolebinding.tap.service_account)
   namespace: #@ namespace
+  labels:
+    rbac-mgmt: "managed"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -83,6 +95,8 @@ metadata:
     kapp.k14s.io/change-rule.delete-order.1: #@ "delete before deleting grype-{}-tap-install-values".format(namespace)
   name: #@ "grype-{}".format(namespace)
   namespace: tap-install
+  labels:
+    rbac-mgmt: "managed"
 spec:
   packageRef:
     refName: grype.scanning.apps.tanzu.vmware.com
@@ -100,6 +114,8 @@ metadata:
     tkg.tanzu.vmware.com/tanzu-package: #@ "grype-{}".format(namespace)
     kapp.k14s.io/change-group: #@ "grype-{}-tap-install-rbac".format(namespace)
   name: #@ "grype-{}-tap-install-cluster-role".format(namespace)
+  labels:
+    rbac-mgmt: "managed"
 rules:
 - apiGroups:
   - '*'
@@ -115,6 +131,8 @@ metadata:
     tkg.tanzu.vmware.com/tanzu-package: #@ "grype-{}".format(namespace)
     kapp.k14s.io/change-group: #@ "grype-{}-tap-install-rbac".format(namespace)
   name: #@ "grype-{}-tap-install-cluster-rolebinding".format(namespace)
+  labels:
+    rbac-mgmt: "managed"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -130,6 +148,8 @@ metadata:
   annotations:
     tkg.tanzu.vmware.com/tanzu-package: #@ "grype-{}".format(namespace)
     kapp.k14s.io/change-group: #@ "grype-{}-tap-install-rbac".format(namespace)
+  labels:
+    rbac-mgmt: "managed"
   name: #@ "grype-{}-tap-install-sa".format(namespace)
   namespace: tap-install
 ---
@@ -141,6 +161,8 @@ metadata:
     kapp.k14s.io/change-group: #@ "grype-{}-tap-install-values".format(namespace)
   name: #@ "grype-{}-tap-install-values".format(namespace)
   namespace: tap-install
+  labels:
+    rbac-mgmt: "managed"
 type: Opaque
 stringData:
   #@yaml/text-templated-strings

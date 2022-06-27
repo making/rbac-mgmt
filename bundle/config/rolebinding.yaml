@@ -89,6 +89,8 @@ kind: RoleBinding
 metadata:
   namespace: #@ rolebinding.namespace
   name: #@ "{}-{}-binding".format(kind.lower(), name)
+  labels:
+    rbac-mgmt: "managed"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: #@ kind
