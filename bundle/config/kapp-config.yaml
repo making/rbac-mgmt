@@ -15,7 +15,7 @@ rebaseRules:
   resourceMatchers:
   - anyMatcher:
       matchers:
-      #@ for/end namespace in [ rolebinding.namespace for rolebinding in data.values.rolebindings if (hasattr(rolebinding, "tap") and hasattr(rolebinding.tap, "enabled") and rolebinding.tap.enabled) ]:
+      #@ for/end namespace in [ rolebinding.namespace.lower() for rolebinding in data.values.rolebindings if (hasattr(rolebinding, "tap") and hasattr(rolebinding.tap, "enabled") and rolebinding.tap.enabled) ]:
       - kindNamespaceNameMatcher:
           kind: Secret
           namespace: #@ namespace

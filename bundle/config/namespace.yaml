@@ -1,5 +1,5 @@
 #@ load("@ytt:data", "data")
-#@ for/end name in [ rolebinding.namespace for rolebinding in data.values.rolebindings if (hasattr(rolebinding, "create_namespace") and rolebinding.create_namespace) ]:
+#@ for/end name in [ rolebinding.namespace.lower() for rolebinding in data.values.rolebindings if (hasattr(rolebinding, "create_namespace") and rolebinding.create_namespace) ]:
 ---
 apiVersion: v1
 kind: Namespace

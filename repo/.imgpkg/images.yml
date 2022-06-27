@@ -14,5 +14,5 @@ images:
       - resolved:
           tag: 0.0.2
           url: ghcr.io/making/rbac-mgmt-bundle:0.0.2
-  image: ghcr.io/making/rbac-mgmt-bundle@sha256:9d1fb981d5fb9b51f51a7f199d8ec26bab4a83ea8d79be70361e1ee3c098cd9a
+  image: ghcr.io/making/rbac-mgmt-bundle@sha256:67331e895f135e89be4610932d52f4a6ce34bcbf37815fea87ca517049045052
 kind: ImagesLock

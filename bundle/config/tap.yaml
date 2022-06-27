@@ -1,7 +1,7 @@
 #@ load("@ytt:data", "data")
 #@ for rolebinding in data.values.rolebindings:
 #@   if hasattr(rolebinding, "tap") and hasattr(rolebinding.tap, "enabled") and rolebinding.tap.enabled :
-#@     namespace = rolebinding.namespace
+#@     namespace = rolebinding.namespace.lower()
 ---
 apiVersion: secretgen.carvel.dev/v1alpha1
 kind: SecretImport

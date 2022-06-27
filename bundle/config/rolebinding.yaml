@@ -87,7 +87,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  namespace: #@ rolebinding.namespace
+  namespace: #@ rolebinding.namespace.lower()
   name: #@ "{}-{}-binding".format(kind.lower(), name)
   labels:
     rbac-mgmt: "managed"
