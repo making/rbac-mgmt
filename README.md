@@ -13,7 +13,7 @@ Add the Package Repository:
 ```
 NAMESPACE=<namespace to install the package>
 
-tanzu package repository add rbac-mgmt-repository -n ${NAMESPACE} --url ghcr.io/making/rbac-mgmt-repo:0.0.1
+tanzu package repository add rbac-mgmt-repository -n ${NAMESPACE} --url ghcr.io/making/rbac-mgmt-repo:0.0.2
 ```
 
 List the available packages to confirm the addition:
@@ -23,12 +23,13 @@ $ tanzu package available list -n ${NAMESPACE}
 
   NAME                    DISPLAY-NAME  SHORT-DESCRIPTION  LATEST-VERSION         
   rbac-mgmt.pkg.maki.lol  rbac-mgmt     RBAC Management    0.0.1 
+  rbac-mgmt.pkg.maki.lol  rbac-mgmt     RBAC Management    0.0.2 
 ```
 
 Check the values for the RBAC Management package:
 
 ```
-$ tanzu package available get -n ${NAMESPACE} rbac-mgmt.pkg.maki.lol/0.0.1 --values-schema
+$ tanzu package available get -n ${NAMESPACE} rbac-mgmt.pkg.maki.lol/0.0.2 --values-schema
 
   KEY                                 DEFAULT  TYPE   DESCRIPTION                                            
   clusterrolebinding.groups           []       array  Definition of ClusterRoleBinding for groups            
@@ -37,7 +38,7 @@ $ tanzu package available get -n ${NAMESPACE} rbac-mgmt.pkg.maki.lol/0.0.1 --val
   rolebindings                        []       array  Definition of RoleBindings per namespace  
 ```
 
-For the more detailed schema, see [the openapi spec](./repo/packages/rbac-mgmt.pkg.maki.lol/0.0.1.yaml#L10-L242)
+For the more detailed schema, see [the openapi spec](./repo/packages/rbac-mgmt.pkg.maki.lol/0.0.2.yaml)
 
 Install the RBAC Management package, using the values file:
 
@@ -66,7 +67,7 @@ rolebindings:
     clusterroles: [ edit ]
 EOF
 
-tanzu package install rbac-mgmt -n ${NAMESPACE} -p rbac-mgmt.pkg.maki.lol -v 0.0.1 -f rbac-mgmt-values.yaml
+tanzu package install rbac-mgmt -n ${NAMESPACE} -p rbac-mgmt.pkg.maki.lol -v 0.0.2 -f rbac-mgmt-values.yaml
 ```
 
 Verify PackageInstall has been created:
@@ -76,7 +77,7 @@ $ tanzu package installed get -n ${NAMESPACE} rbac-mgmt
 
 NAME:                    rbac-mgmt
 PACKAGE-NAME:            rbac-mgmt.pkg.maki.lol
-PACKAGE-VERSION:         0.0.1
+PACKAGE-VERSION:         0.0.2
 STATUS:                  Reconcile succeeded
 CONDITIONS:              [{ReconcileSucceeded True  }]
 ```
@@ -369,7 +370,7 @@ spec:
   serviceAccountName: rbac-mgmt-sa # <--- Needed
   fetch:
   - imgpkgBundle:
-      image: ghcr.io/making/rbac-mgmt-bundle:0.0.1
+      image: ghcr.io/making/rbac-mgmt-bundle:0.0.2
   - git:
       url: https://github.com/making/rbac-mgmt-config-example.git # <--- Change to your repository 
       ref: origin/main
