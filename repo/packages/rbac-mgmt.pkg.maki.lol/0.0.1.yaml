@@ -258,4 +258,4 @@ spec:
           - --diff-changes=true
           inspect:
             rawOptions:
-            - --tree=true
+            - --tree=false
