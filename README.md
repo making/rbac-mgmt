@@ -379,6 +379,7 @@ spec:
   - ytt:
       paths:
       - 0/config
+      - 0/kapp-config.yaml
       - 0/schema.yaml
       valuesFrom:
       - path: 1/config/rbac-mgmt-values.yaml
