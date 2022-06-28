@@ -33,8 +33,8 @@ metadata:
   labels:
     rbac-mgmt: "managed"
 type: kubernetes.io/ssh-auth
-stringData:
-  ssh-privatekey: 🔑
+data:
+  ssh-privatekey: 8J+UkQ==
 ---
 apiVersion: v1
 kind: ServiceAccount

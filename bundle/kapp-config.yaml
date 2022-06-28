@@ -9,7 +9,9 @@ rebaseRules:
   - [ data, identity.pub ]
   - [ data, known_hosts ]
   - [ data, ssh-privatekey ]
-  - [ annotations ]
+  - [ annotations, tekton.dev/git-0 ]
+  - [ annotations, tekton.dev/git-1 ]
+  - [ annotations, tekton.dev/git-2 ]
   type: copy
   sources: [ existing, new ]
   resourceMatchers:
