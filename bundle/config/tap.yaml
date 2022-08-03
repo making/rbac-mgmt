@@ -60,6 +60,7 @@ metadata:
 secrets:
 - name: registry-credentials
 - name: git-ssh
+- name: git-basic
 imagePullSecrets:
 - name: registry-credentials
 - name: tap-registry
