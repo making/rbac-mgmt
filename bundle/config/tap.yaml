@@ -42,7 +42,7 @@ metadata:
   name: git-basic
   namespace: #@ namespace
   annotations:
-    tekton.dev/git-0: github.com
+    tekton.dev/git-0: https://github.com
   labels:
     rbac-mgmt: "managed"
 type: kubernetes.io/basic-auth
