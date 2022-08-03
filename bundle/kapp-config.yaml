@@ -9,6 +9,8 @@ rebaseRules:
   - [ data, identity.pub ]
   - [ data, known_hosts ]
   - [ data, ssh-privatekey ]
+  - [ data, username ]
+  - [ data, password ]
   - [ annotations, tekton.dev/git-0 ]
   - [ annotations, tekton.dev/git-1 ]
   - [ annotations, tekton.dev/git-2 ]
