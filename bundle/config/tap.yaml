@@ -37,6 +37,20 @@ data:
   ssh-privatekey: 8J+UkQ==
 ---
 apiVersion: v1
+kind: Secret
+metadata:
+  name: git-basic
+  namespace: #@ namespace
+  annotations:
+    tekton.dev/git-0: github.com
+  labels:
+    rbac-mgmt: "managed"
+type: kubernetes.io/basic-auth
+data:
+  username: Q0hBTkdFTUU=
+  password: Q0hBTkdFTUU=
+---
+apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: #@ rolebinding.tap.service_account
