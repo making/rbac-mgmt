@@ -5,6 +5,7 @@ kind: Config
 rebaseRules:
 #! git-ssh uses what's on the cluster
 - paths:
+  - [ type ]
   - [ data, identity ]
   - [ data, identity.pub ]
   - [ data, known_hosts ]
