@@ -6,22 +6,22 @@
 apiVersion: secretgen.carvel.dev/v1alpha1
 kind: SecretImport
 metadata:
-  name: tap-registry
+  name: #@ data.values.tap_registry.name
   namespace: #@ namespace
   labels:
     rbac-mgmt: "managed"
 spec:
-  fromNamespace: tap-install
+  fromNamespace: #@ data.values.tap_registry.import_from_namespace
 ---
 apiVersion: secretgen.carvel.dev/v1alpha1
 kind: SecretImport
 metadata:
-  name: registry-credentials
+  name: #@ data.values.registry_credentials.name
   namespace: #@ namespace
   labels:
     rbac-mgmt: "managed"
 spec:
-  fromNamespace: build-service
+  fromNamespace: #@ data.values.registry_credentials.import_from_namespace
 ---
 apiVersion: v1
 kind: Secret

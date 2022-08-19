@@ -1,5 +1,18 @@
 #@data/values-schema
 ---
+#@schema/desc "Definition of SecretImport for tap-registry"
+tap_registry:
+  #@schema/desc "name of the tap-registry secret"
+  name: tap-registry
+  #@schema/desc "namespace where the tap-registry secret is exported"
+  import_from_namespace: tap-install
+#@schema/desc "Definition of SecretImport for registry-credentials"
+registry_credentials:
+  #@schema/desc "name of the registry-credentials secret"
+  name: registry-credentials
+  #@schema/desc "namespace where the registry-credentials secret is exported"
+  import_from_namespace: build-service
+
 #@schema/desc "Definition of RoleBindings per namespace"
 rolebindings:
 - #@schema/desc "Namespace for the rolebinding"
@@ -17,7 +30,7 @@ rolebindings:
       #@schema/desc "Whether to install grype package"
       enabled: false
       #@schema/desc "grype version"
-      version: 1.1.1
+      version: 1.2.2
   #@schema/desc "Definition of RoleBinding for users"
   #@schema/examples ("Example of users", [{"name": "alex@example.com", "roles": ["app-developer"]}, {"name": "oliver@example.com", "roles": ["app-operator"], "clusterroles": ["admin"]}])
   users:

@@ -11,6 +11,32 @@ spec:
       type: object
       additionalProperties: false
       properties:
+        tap_registry:
+          type: object
+          additionalProperties: false
+          description: Definition of SecretImport for tap-registry
+          properties:
+            name:
+              type: string
+              description: name of the tap-registry secret
+              default: tap-registry
+            import_from_namespace:
+              type: string
+              description: namespace where the tap-registry secret is exported
+              default: tap-install
+        registry_credentials:
+          type: object
+          additionalProperties: false
+          description: Definition of SecretImport for registry-credentials
+          properties:
+            name:
+              type: string
+              description: name of the registry-credentials secret
+              default: registry-credentials
+            import_from_namespace:
+              type: string
+              description: namespace where the registry-credentials secret is exported
+              default: build-service
         rolebindings:
           type: array
           description: Definition of RoleBindings per namespace
@@ -51,7 +77,7 @@ spec:
                       version:
                         type: string
                         description: grype version
-                        default: 1.1.1
+                        default: 1.2.2
               users:
                 type: array
                 description: Definition of RoleBinding for users
