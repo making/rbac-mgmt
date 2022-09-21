@@ -58,11 +58,11 @@ metadata:
   labels:
     rbac-mgmt: "managed"
 secrets:
-- name: registry-credentials
+- name: #@ data.values.registry_credentials.name
 - name: git-ssh
 - name: git-basic
 imagePullSecrets:
-- name: registry-credentials
+- name: #@ data.values.registry_credentials.name
 - name: tap-registry
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -183,7 +183,7 @@ stringData:
   #@yaml/text-templated-strings
   values.yml: |
     namespace: (@= namespace @)
-    targetImagePullSecret: registry-credentials
+    targetImagePullSecret: (@= data.values.registry_credentials.name @)
 #@     end
 #@   end
 #@ end
