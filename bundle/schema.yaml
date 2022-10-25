@@ -30,7 +30,10 @@ rolebindings:
       #@schema/desc "Whether to install grype package"
       enabled: false
       #@schema/desc "grype version"
-      version: 1.2.2
+      version: 1.3.0
+      #@schema/desc "grype metadata store config"
+      #@schema/type any=True
+      metadata_store: {}
   #@schema/desc "Definition of RoleBinding for users"
   #@schema/examples ("Example of users", [{"name": "alex@example.com", "roles": ["app-developer"]}, {"name": "oliver@example.com", "roles": ["app-operator"], "clusterroles": ["admin"]}])
   users:

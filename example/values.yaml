@@ -7,6 +7,14 @@ rolebindings:
     enabled: true
     grype:
       enabled: true
+      metadata_store:
+        url: https://metadata-store.view.example.com
+        caSecret:
+          name: store-ca-cert
+          importFromNamespace: metadata-store-secrets
+        authSecret:
+          name: store-auth-token
+          importFromNamespace: metadata-store-secrets
   users:
   - name: alex
     roles: [ app-developer ]

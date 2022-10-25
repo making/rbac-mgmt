@@ -1,4 +1,5 @@
 #@ load("@ytt:data", "data")
+#@ load("@ytt:yaml", "yaml")
 #@ for rolebinding in data.values.rolebindings:
 #@   if hasattr(rolebinding, "tap") and hasattr(rolebinding.tap, "enabled") and rolebinding.tap.enabled :
 #@     namespace = rolebinding.namespace.lower()
@@ -116,7 +117,8 @@ spec:
   packageRef:
     refName: grype.scanning.apps.tanzu.vmware.com
     versionSelection:
-      constraints: rolebinding.tap.grype.version
+      constraints: #@ rolebinding.tap.grype.version
+      prereleases: {}
   serviceAccountName: #@ "grype-{}-tap-install-sa".format(namespace)
   values:
   - secretRef:
@@ -168,6 +170,14 @@ metadata:
   name: #@ "grype-{}-tap-install-sa".format(namespace)
   namespace: tap-install
 ---
+#@ def grype_values():
+namespace: #@ namespace
+targetImagePullSecret: #@ data.values.registry_credentials.name
+#@ if rolebinding.tap.grype.metadata_store :
+metadataStore: #@ rolebinding.tap.grype.metadata_store
+#@ end
+#@ end
+
 apiVersion: v1
 kind: Secret
 metadata:
@@ -180,10 +190,7 @@ metadata:
     rbac-mgmt: "managed"
 type: Opaque
 stringData:
-  #@yaml/text-templated-strings
-  values.yml: |
-    namespace: (@= namespace @)
-    targetImagePullSecret: (@= data.values.registry_credentials.name @)
+  values.yml: #@ yaml.encode(grype_values())
 #@     end
 #@   end
 #@ end
