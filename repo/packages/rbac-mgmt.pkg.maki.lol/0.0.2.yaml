@@ -77,7 +77,11 @@ spec:
                       version:
                         type: string
                         description: grype version
-                        default: 1.2.2
+                        default: 1.3.0
+                      metadata_store:
+                        nullable: true
+                        description: grype metadata store config
+                        default: {}
               users:
                 type: array
                 description: Definition of RoleBinding for users
