@@ -1,0 +1,24 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:yaml", "yaml")
+
+#@ namespaces = []
+#@ for rolebinding in data.values.rolebindings:
+#@   if rolebinding.tap.desired_namespace.enabled:
+#@      namespace = {'name': rolebinding.namespace}
+#@      namespace.update(rolebinding.tap.desired_namespace.params)
+#@      namespaces.append(namespace)
+#@   end
+#@ end
+
+#@ if len(namespaces) > 0:
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    namespace-provisioner.apps.tanzu.vmware.com/no-overwrite: ""
+    kapp.k14s.io/delete-strategy: orphan
+  name: desired-namespaces
+  namespace: tap-namespace-provisioning
+data:
+  namespaces.yaml: #@ "#@data/values\n---\n{}".format(yaml.encode({'namespaces': namespaces}))
+#@ end

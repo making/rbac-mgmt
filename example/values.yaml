@@ -4,17 +4,10 @@ rolebindings:
 - namespace: demo
   create_namespace: true
   tap:
-    enabled: true
-    grype:
+    desired_namespace:
       enabled: true
-      metadata_store:
-        url: https://metadata-store.view.example.com
-        caSecret:
-          name: store-ca-cert
-          importFromNamespace: metadata-store-secrets
-        authSecret:
-          name: store-auth-token
-          importFromNamespace: metadata-store-secrets
+      params:
+        language: java
   users:
   - name: alex
     roles: [ app-developer ]
@@ -33,8 +26,8 @@ rolebindings:
     clusterroles: [ view ]
 - namespace: alex
   tap:
-    enabled: true
-    service_account: foo
+    desired_namespace:
+      enabled: true
   users:
   - name: alex
     roles: [ app-developer ]

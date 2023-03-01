@@ -12,7 +12,6 @@ registry_credentials:
   name: registry-credentials
   #@schema/desc "namespace where the registry-credentials secret is exported"
   import_from_namespace: build-service
-
 #@schema/desc "Definition of RoleBindings per namespace"
 rolebindings:
 - #@schema/desc "Namespace for the rolebinding"
@@ -21,6 +20,13 @@ rolebindings:
   create_namespace: false
   #@schema/desc "Developer Configurations for Tanzu Application Platform per namespace"
   tap:
+    #@schema/desc "Configuration for a desired namespace"
+    desired_namespace:
+      #@schema/desc "Whether it is a desired namespace"
+      enabled: false
+      #@schema/desc "params for the namespace"
+      #@schema/type any=True
+      params: { }
     #@schema/desc "Whether to enable developer configurations for Tanzu Application Platform"
     enabled: false
     #@schema/desc "Whether to make kapp forget about TAP related resources"
