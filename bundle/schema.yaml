@@ -23,6 +23,8 @@ rolebindings:
   tap:
     #@schema/desc "Whether to enable developer configurations for Tanzu Application Platform"
     enabled: false
+    #@schema/desc "Whether to make kapp forget about TAP related resources"
+    orphan: false
     #@schema/desc "service account name"
     service_account: default
     #@schema/desc "Configuration of grype package"
