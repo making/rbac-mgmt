@@ -52,11 +52,28 @@ spec:
                 type: boolean
                 description: Whether to create the namespace
                 default: false
+              namespace_labels:
+                nullable: true
+                description: Labels for the namespace
+                default: {}
               tap:
                 type: object
                 additionalProperties: false
                 description: Developer Configurations for Tanzu Application Platform per namespace
                 properties:
+                  desired_namespace:
+                    type: object
+                    additionalProperties: false
+                    description: Configuration for a desired namespace
+                    properties:
+                      enabled:
+                        type: boolean
+                        description: Whether it is a desired namespace
+                        default: false
+                      params:
+                        nullable: true
+                        description: params for the namespace
+                        default: {}
                   enabled:
                     type: boolean
                     description: Whether to enable developer configurations for Tanzu Application Platform

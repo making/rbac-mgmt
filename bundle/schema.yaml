@@ -18,6 +18,9 @@ rolebindings:
   namespace: ""
   #@schema/desc "Whether to create the namespace"
   create_namespace: false
+  #@schema/desc "Labels for the namespace"
+  #@schema/type any=True
+  namespace_labels: { }
   #@schema/desc "Developer Configurations for Tanzu Application Platform per namespace"
   tap:
     #@schema/desc "Configuration for a desired namespace"

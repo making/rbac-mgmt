@@ -3,11 +3,8 @@
 rolebindings:
 - namespace: demo
   create_namespace: true
-  tap:
-    desired_namespace:
-      enabled: true
-      params:
-        language: java
+  namespace_labels:
+    apps.tanzu.vmware.com/tap-ns: ""
   users:
   - name: alex
     roles: [ app-developer ]
@@ -25,9 +22,6 @@ rolebindings:
     roles: [ app-developer ]
     clusterroles: [ view ]
 - namespace: alex
-  tap:
-    desired_namespace:
-      enabled: true
   users:
   - name: alex
     roles: [ app-developer ]

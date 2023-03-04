@@ -1,0 +1,19 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:overlay", "overlay")
+#@ for rolebinding in data.values.rolebindings:
+#@   if hasattr(rolebinding, "namespace_labels") and len(rolebinding.namespace_labels) > 0:
+#@     name = rolebinding.namespace.lower()
+#@     labels = rolebinding.namespace_labels
+
+#@ def merge(a, b):
+#@   ret = dict(a)
+#@   ret.update(b)
+#@   return ret
+#@ end
+#@overlay/match by=overlay.subset({"kind":"Namespace", "metadata": {"name": name}})
+---
+metadata:
+  #@overlay/replace via=lambda a, b: merge(a, b)
+  labels: #@ labels
+#@   end
+#@ end
